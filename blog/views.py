@@ -13,3 +13,6 @@ def homepage(request):
 def post_detail(request, slug):
     post = Post.objects.get(slug=slug)
     return render(request, 'blog/post_detail.html', {'post':post})
+
+def create_post(request):
+    return render(request, 'blog/create_post.html')

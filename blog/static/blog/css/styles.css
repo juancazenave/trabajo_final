@@ -565,6 +565,7 @@ progress {
 .list-inline {
   padding-left: 0;
   list-style: none;
+  justify-content: center;
 }
 
 .list-inline-item {
@@ -672,6 +673,7 @@ progress {
   margin-top: calc(var(--bs-gutter-y) * -1);
   margin-right: calc(var(--bs-gutter-x) * -.5);
   margin-left: calc(var(--bs-gutter-x) * -.5);
+  justify-content: center;
 }
 .row > * {
   flex-shrink: 0;
@@ -11292,8 +11294,8 @@ header.masthead {
   /* background-color: #343a40; */
   background: url("../assets/img/bg-masthead1.jpg") no-repeat center center;
   background-size: cover;
-  /* padding-top: 0.5rem; */
-  /* padding-bottom: 55rem; */
+  padding-top: 0.5rem;
+
 }
 header.masthead:before {
   content: "";
@@ -11363,6 +11365,6 @@ header.masthead h1, header.masthead .h1 {
 }
 
 footer.footer {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
