@@ -39,9 +39,9 @@ def erase_post(request, id):
     # direcciono a pagina donde indico el Post que se borra
     return render(request, 'blog/erase_post.html', {'post':post_erased})
 
-def edit_post(request, id):
+def edit_post(request, post_id):
 # recibo el nombre del post que voy a modificar
-    post = Post.objects.get(id=id)
+    post = Post.objects.get(id=post_id)
 
     if request.method == 'POST':
         # recibo la informacion del HTML (lo que ingresa el usuario)
@@ -61,15 +61,11 @@ def edit_post(request, id):
             # con el save() se graba la info nuevamente en post, con el 'id' que di al principio
             post.save()
 
-            # ahora con el cambio guardado, quiero que traiga todos los posts actualizados nuevamente
-            updated_posts = Post.objects.all()
-            contexto = {'posts': updated_posts}
-
             # Back to HomePage
-            return render(request, 'blog/homepage.html', contexto)
+            return render(request, 'blog/homepage.html')
     
     else:
 
         miPost = PostFormulario(initial={'title': post.title, 'intro': post.intro, 'body': post.body})
     
-    return render(request, 'blog/edit_post.html', {'mi_post': miPost})
+    return render(request, 'blog/edit_post.html', {'miPost': miPost, 'post_id': post_id})
