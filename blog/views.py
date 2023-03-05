@@ -61,7 +61,7 @@ def edit_post(request, id):
             # con el save() se graba la info nuevamente en post, con el 'id' que di al principio
             post.save()
 
-            # 
+            # ahora con el cambio guardado, quiero que traiga todos los posts actualizados nuevamente
             updated_posts = Post.objects.all()
             contexto = {'posts': updated_posts}
 
