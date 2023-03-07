@@ -1,26 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse, reverse_lazy
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .models import Post
 from .forms import *
-
-class PostList(ListView):
-    model = Post
-    template_name = 'blog/homepage.html'
-
-class PostDetail(DetailView):
-    model = Post
-    template_name = 'blog/post_detail.html'
-
-class CreatePost(CreateView):
-    model = Post
-    success_url = 'blog/create_post.html'
 
 # Create your views here.
 def base(request):
@@ -34,6 +24,7 @@ def post_detail(request, id):
     post = Post.objects.get(id=id)
     return render(request, 'blog/post_detail.html', {'post':post})
 
+@login_required
 def create_post(request):
 
     if request.method == 'POST':
@@ -51,6 +42,7 @@ def create_post(request):
 
     return render(request, 'blog/create_post.html', {"miFormulario": miFormulario})
 
+@login_required
 def erase_post(request, id):
     post_erased = Post.objects.get(id=id)
     post_erased.delete()
@@ -58,6 +50,7 @@ def erase_post(request, id):
     # direcciono a pagina donde indico el Post que se borra
     return render(request, 'blog/erase_post.html', {'post':post_erased})
 
+@login_required
 def edit_post(request, post_id):
 # recibo el nombre del post que voy a modificar
     post = Post.objects.get(id=post_id)
@@ -134,4 +127,54 @@ def register(request):
     
     return render(request, 'blog/register.html', {'form': form})
     
+class PostList(ListView):
+    model = Post
+    template_name = 'blog/homepage.html'
 
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+
+class CreatePost(CreateView):
+    model = Post
+    template_name = 'blog/create_post.html'
+    success_url = reverse_lazy('base')
+    fields = ['title','intro','body']
+
+class PostUpdate(UpdateView):
+    model = Post
+    template_name = 'blog/edit_post.html'
+    success_url = reverse_lazy('base')
+    fields = ['title','intro','body']
+
+class PostDelete(DeleteView):
+    model = Post
+    template_name = 'blog/erase_post.html'
+    success_url = reverse_lazy('base')
+
+@login_required
+def edit_profile(request):
+    user_ed = User.objects.get(username=request.user)
+
+    if request.method == 'POST':
+        mi_form = UserEditForm(request.POST, instance=request.user)
+
+        if mi_form.is_valid():
+            info = mi_form.cleaned_data
+
+            user_ed.username = info['username']
+            user_ed.email = info['email']
+            user_ed.password1 = info['password1']
+            user_ed.password2 = info['password2']
+            user_ed.last_name = info['last_name']
+            user_ed.first_name = info['first_name']
+
+            user_ed.save()
+
+            return redirect('/')
+    
+    else:
+        mi_form = UserEditForm(initial={'username': user_ed.username, 
+                                        'email': user_ed.email, 'last_name': user_ed.last_name, 'first_name': user_ed.first_name})
+
+    return render(request, 'blog/edit_profile.html', {'mi_form': mi_form})

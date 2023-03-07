@@ -18,12 +18,14 @@ HOMEPAGE
             <button>
                 <a href="{% url 'post_detail' post.id %}">Read More</a>
             </button>
+            {% if user.is_authenticated %}
             <button>
                 <a href="{% url 'erase_post' post.id %}">Erase Post</a>
             </button>
             <button>
                 <a href="{% url 'edit_post' post.id %}">Edit Post</a>
             </button>
+            {% endif %}
         </div>
     {% endfor %}
 {% endblock contenido %}
