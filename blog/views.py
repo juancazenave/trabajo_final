@@ -1,7 +1,26 @@
 from django.shortcuts import render
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
 
 from .models import Post
 from .forms import *
+
+class PostList(ListView):
+    model = Post
+    template_name = 'blog/homepage.html'
+
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
+
+class CreatePost(CreateView):
+    model = Post
+    success_url = 'blog/create_post.html'
 
 # Create your views here.
 def base(request):
@@ -69,3 +88,50 @@ def edit_post(request, post_id):
         miPost = PostFormulario(initial={'title': post.title, 'intro': post.intro, 'body': post.body})
     
     return render(request, 'blog/edit_post.html', {'miPost': miPost, 'post_id': post_id})
+
+def login_request(request):
+    form = AuthenticationForm()
+
+    if request.method =='POST':
+        form = AuthenticationForm(request, data=request.POST)
+
+        if form.is_valid():
+            user = form.cleaned_data.get('username')
+            psw = form.cleaned_data.get('password')
+
+            user = authenticate(username=user, password=psw)
+
+            if user is not None:
+                login(request, user)
+                contexto = {'mensaje': f'Welcome {user}'}
+                return render(request, 'blog/homepage.html', contexto)
+            else:
+                return render(request, 'blog/login.html', {'mensaje': 'Error: User not existing', 'form': form})
+        
+        else:
+            contexto = {'mensaje': 'Error: User or Password Incorrect', 'form': form}
+            return render(request, 'blog/login.html', contexto)
+
+    contexto = {'form': form}
+    return render(request, 'blog/login.html', contexto)
+
+def register(request):
+     
+    if request.method == 'POST':
+        #  form = UserCreationForm(request.POST)
+         form = MyUserCreationForm(request.POST)
+
+         if form.is_valid():
+             username = form.cleaned_data['username']
+             form.save()
+             contexto = {'mensaje': 'User created successfully!'}
+             return render(request, 'blog/homepage.html', contexto)
+    
+    # si el usuario aun no se ha registrado, con el else le damos un formulario vacio
+    else:
+        # form = UserCreationForm()
+        form = MyUserCreationForm()
+    
+    return render(request, 'blog/register.html', {'form': form})
+    
+

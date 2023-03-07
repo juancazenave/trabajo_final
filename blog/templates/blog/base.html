@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Landing Page - Start Bootstrap Theme</title>
+        <title>{% block title %}{% endblock %}</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -22,7 +22,9 @@
             <div class="container">
                 <a class="navbar-brand" href="{% url 'homepage' %}">HomePage</a>
                 <a class="navbar-brand" href="{% url 'create_post' %}">Create a Post</a>
-                <a class="btn btn-primary" href="#signup">Sign Up</a>
+                <a class="btn btn-primary" href="{% url 'login' %}">Log In</a>
+                <a class="btn btn-primary" href="{% url 'logout' %}">Log Out</a>
+                <a class="btn btn-primary" href="{% url 'register' %}">Sign Up</a>
             </div>
         </nav>
         <!-- Masthead-->

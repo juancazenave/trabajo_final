@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block contenido %}
+
+{% block title %}
+REGISTER USER SECTION
+{% endblock title %}
+
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign Up</button>
+    </form>
+</body>
+{% endblock contenido %}
