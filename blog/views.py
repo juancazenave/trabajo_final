@@ -28,12 +28,12 @@ def post_detail(request, id):
 def create_post(request):
 
     if request.method == 'POST':
-        miFormulario = PostFormulario(request.POST)
+        miFormulario = PostFormulario(request.POST, request.FILES)
         print(miFormulario)
 
         if miFormulario.is_valid:
             informacion = miFormulario.cleaned_data
-            publicacion = Post(title=informacion['title'], intro=informacion['intro'], body=informacion['body'])
+            publicacion = Post(title=informacion['title'], intro=informacion['intro'], body=informacion['body'], post_image=informacion['post_image'])
             publicacion.save()
             return render(request, 'blog/homepage.html')
     
@@ -154,27 +154,39 @@ class PostDelete(DeleteView):
 
 @login_required
 def edit_profile(request):
-    user_ed = User.objects.get(username=request.user)
+    usuario = User.objects.get(username=request.user)
 
     if request.method == 'POST':
-        mi_form = UserEditForm(request.POST, instance=request.user)
+        mi_form = UserEditForm(request.POST)
 
         if mi_form.is_valid():
             info = mi_form.cleaned_data
 
-            user_ed.username = info['username']
-            user_ed.email = info['email']
-            user_ed.password1 = info['password1']
-            user_ed.password2 = info['password2']
-            user_ed.last_name = info['last_name']
-            user_ed.first_name = info['first_name']
+            usuario.username = info['username']
+            usuario.email = info['email']
+            usuario.last_name = info['last_name']
+            usuario.first_name = info['first_name']
 
-            user_ed.save()
+            usuario.save()
 
-            return redirect('/')
+            return redirect('/blog')
     
     else:
-        mi_form = UserEditForm(initial={'username': user_ed.username, 
-                                        'email': user_ed.email, 'last_name': user_ed.last_name, 'first_name': user_ed.first_name})
+        mi_form = UserEditForm(initial={'username': usuario.username, 
+                                        'email': usuario.email, 'last_name': usuario.last_name, 'first_name': usuario.first_name})
 
     return render(request, 'blog/edit_profile.html', {'mi_form': mi_form})
+
+@login_required
+def add_avatar(request):
+    avatar = request.user.avatar
+    mi_form = AvatarFormulario(instance=avatar)
+
+    if request.method == 'POST':
+        mi_form = AvatarFormulario(request.POST, request.FILES, instance=avatar)
+        if mi_form.is_valid():
+            mi_form.save()
+            return render(request, 'blog/homepage.html')
+    
+    else:
+        return render(request, 'blog/add_avatar.html', {'mi_form': mi_form})
