@@ -22,4 +22,10 @@ PASO 3: Desde VISUAL STUDIO CODE
 MI PROYECTO es un Blog de Posts en Ingles, de articulos de temas de interes general en ingles. Este blog tiene su propio registro y login de usuarios. Cada Post que quieran realizar, le pueden agregar un Titulo, una Introduccion, un Cuerpo de Desarrollo, y tambien agregar imagenes en cada Post. Estos Posts sera posible editarlos e incluso eliminarlos, si estan loggeados al sitio Web.
 Tambien se incluye una seccion de actualizacion de datos de perfil y la posibilidad de subir una imagen de AVATAR, que se podra visualizar end la barra de navegacion cada vez que se inicie sesion.
 
-LINK AL VIDEO EXPLICATIVO: 
+LINK AL VIDEO EXPLICATIVO de mi BLOG: 
+https://youtu.be/SqsZlGLNLTs
+
+NOTA: al crear un usuario y password nuevos, la edicion del Avatar fallara! esto se debe a que hay un solo superuseresto lo hable con los chicos de CoderAsk y habria que hacer una re-edicion del usuario a traves de una clase usuario, como se indica en el video a continuacion: https://www.youtube.com/watch?v=lNxQkW1kjto
+Por todo esto, indico que el USUARIO Y PASSWORD a utilizar son: 
+SUPERUSER: juancazenave
+PSW: coder48265
