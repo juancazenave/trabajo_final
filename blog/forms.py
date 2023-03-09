@@ -42,4 +42,4 @@ class AvatarFormulario(forms.ModelForm):
     class Meta:
         model = Avatar
         fields = '__all__'
-        exclude = ['user']
+        
