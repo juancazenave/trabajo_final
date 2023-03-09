@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block contenido %}
+    <h1 class="title">Mi nombre es JUAN FRANCISCO CAZENAVE</h1>
+    <h3 class="description">Soy alumno de la cursada de Python en Coderhouse</h3>
+    <h3 class="tp final">Este es mi Trabajo Final</h3>
+    <small>El Proyecto esta basado en poder ir posteando publicaciones en ingles de PodCasts que voy escuchando. 
+        De esta manera, me ayudara como complemento para dar a mis alumnos en mis clases de Ingles</small>
+    <p><strong>GRACIAS!!!</strong></p>
+    {% if post.post_image %}
+    <img src="{{ post.post_image.url }}">
+    {% endif %}
+{% endblock contenido %}

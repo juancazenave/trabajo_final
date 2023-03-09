@@ -190,3 +190,6 @@ def add_avatar(request):
     
     else:
         return render(request, 'blog/add_avatar.html', {'mi_form': mi_form})
+    
+def about_me(request):
+    return render(request, 'blog/aboutme.html')

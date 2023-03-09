@@ -17,8 +17,9 @@ HOMEPAGE
             <p>{{ post.intro }}</p>
             <br>
             {% if post.post_image %}
-            <img src="{{ post.post_image.url }}">
+            <img src="{{ post.post_image.url }}" height="70%" width="70%">
             {% endif %}
+            <br>
             <button>
                 <a href="{% url 'post_detail' post.id %}">Read More</a>
             </button>
@@ -31,5 +32,7 @@ HOMEPAGE
             </button>
             {% endif %}
         </div>
+        <br>
     {% endfor %}
 {% endblock contenido %}
+
