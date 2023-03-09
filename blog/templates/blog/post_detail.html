@@ -4,5 +4,8 @@
     <h1 class="title">{{ post.title }}</h1>
     <small>Posted at {{ post.date_added }}</small>
     <p><strong>{{ post.intro }}</strong></p>
+    {% if post.post_image %}
+    <img src="{{ post.post_image.url }}">
+    {% endif %}
     <p>{{ post.body }}</p>
 {% endblock contenido %}
