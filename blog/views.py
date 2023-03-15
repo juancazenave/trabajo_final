@@ -192,6 +192,3 @@ def add_avatar(request):
     
 def about_me(request):
     return render(request, 'blog/aboutme.html')
-
-def page_notfound(request, exception):
-    return render(request, 'notfound.html')
