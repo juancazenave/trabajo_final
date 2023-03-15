@@ -179,16 +179,15 @@ def edit_profile(request):
 
 @login_required
 def add_avatar(request):
-    avatar = request.user.avatar
-    mi_form = AvatarFormulario(instance=avatar)
-
     if request.method == 'POST':
-        mi_form = AvatarFormulario(request.POST, request.FILES, instance=avatar)
+        mi_form = AvatarFormulario(request.POST, request.FILES)
         if mi_form.is_valid():
             mi_form.save()
             return render(request, 'blog/homepage.html')
     
     else:
+        mi_form = AvatarFormulario()
+
         return render(request, 'blog/add_avatar.html', {'mi_form': mi_form})
     
 def about_me(request):
