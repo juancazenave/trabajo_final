@@ -20,4 +20,4 @@ class Avatar(models.Model):
     user_image = models.ImageField(upload_to='avatares', null=True, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return f'{self.user.username} Profile'
