@@ -38,6 +38,8 @@ class UserEditForm(forms.Form):
         help_texts = {k: '' for k in fields}
 
 class AvatarFormulario(forms.ModelForm):
+    user_image = forms.ImageField(label="imagen")
+    # Al cambiarlo, ya no nos va a mostrar el campo de usuarios, así que no podríamos enviarlo estando desde otro usuario
 
     class Meta:
         model = Avatar

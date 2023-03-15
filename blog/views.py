@@ -182,13 +182,20 @@ def add_avatar(request):
     if request.method == 'POST':
         mi_form = AvatarFormulario(request.POST, request.FILES)
         if mi_form.is_valid():
-            mi_form.save()
+            avatar_anterior = Avatar.objects.filter(user=request.user)
+            if (len(avatar_anterior) > 0):
+                avatar_anterior.delete()
+            avatar_nuevo = Avatar(user=request.user, user_image=mi_form.cleaned_data["user_image"])
+            avatar_nuevo.save()
             return render(request, 'blog/homepage.html')
-    
+
     else:
         mi_form = AvatarFormulario()
 
-        return render(request, 'blog/add_avatar.html', {'mi_form': mi_form})
+    return render(request, 'blog/add_avatar.html', {'mi_form': mi_form})
     
 def about_me(request):
     return render(request, 'blog/aboutme.html')
+
+def page_notfound(request, exception):
+    return render(request, 'notfound.html')
